@@ -27,8 +27,8 @@
 *********************************************************************************************************
 */
 
-OS_STK        TaskStk[N_TASKS][TASK_STK_SIZE];        /* Tasks stacks  1單位16bits=2bytes 所以512*2=1Kbytes  */
-OS_STK        TaskStartStk[TASK_STK_SIZE];            
+OS_STK        TaskStk[N_TASKS][TASK_STK_SIZE];        /* Tasks stacks                                  */
+OS_STK        TaskStartStk[TASK_STK_SIZE];
 char          TaskData[N_TASKS];                      /* Parameters to pass to each task               */
 OS_EVENT     *RandomSem;
 
@@ -55,7 +55,7 @@ void  main (void)
 {
     PC_DispClrScr(DISP_FGND_WHITE + DISP_BGND_BLACK);      /* Clear the screen                         */
 
-    OSInit();                                              /* Initialize uC/OS-II  例如:Task ready list、priority table、TCB、Free pool */
+    OSInit();                                              /* Initialize uC/OS-II                      */
 
     PC_DOSSaveReturn();                                    /* Save environment to return to DOS        */
     PC_VectSet(uCOS, OSCtxSw);                             /* Install uC/OS-II's context switch vector */
