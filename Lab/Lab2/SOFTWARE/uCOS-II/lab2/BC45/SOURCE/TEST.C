@@ -196,25 +196,7 @@ void printCtxSwMessage(){
             printf("%s",CtxSwMessage[i]);
 
             OSTimeDly(100);  //故意放慢print速度
-            // CtxSwMessage[i]="";
-            // sprintf(&CtxSwMessage[i], "tetetetetetetet\0");
-            // if (err < 0)
-            // {
-            //     printf("print error \n");
-            // }
         }
-
-        // for(;k<CtxSwMessageTop;k++){
-        //     for(;j<100;j++){
-                
-        //     }
-        // }
-        // // char temp[CtxSwMessageSize][100];
-        // // CtxSwMessage = temp;
-        // CtxSwMessageTop=0;
-
-
-
 }
 void ArgumentSet(void){  //設定任務參數
     OS_TCB* ptcb;
