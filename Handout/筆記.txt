@@ -1,0 +1,23 @@
+PCP
+lock Resource
+1.是否avaliable
+2.目前task 的priority是否>System ceiling
+
+
+注意:
+被system ceiling block住 一樣要做優先權繼承
+
+三種blocking
+1.Direct blocking
+2.Priority-inheritance blocking
+3.Avoidance blocking(priority-ceiling blocking)
+
+優點:
+1.PCP避免uncontrolled blocking
+2.PCP避免deadlock
+
+Theorem:
+PCP最多在critical section被blocked一次
+
+
+priority最低 不會有blocking time!!
