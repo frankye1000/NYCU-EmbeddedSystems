@@ -3,6 +3,7 @@
 * test.c
 
 * Output Example Case 1:
+
 |  Time   | Event   | Content                 | 
 |:------: | :------:| :---------------------: |
 | 2       | lock    | R1(Prio=5 changes to=1) |
