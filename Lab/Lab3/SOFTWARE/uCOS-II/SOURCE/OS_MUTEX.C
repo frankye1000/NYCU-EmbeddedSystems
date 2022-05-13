@@ -308,7 +308,7 @@ void  OSMutexPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
 #if OS_CRITICAL_METHOD == 3                                /* Allocate storage for CPU status register */
     OS_CPU_SR  cpu_sr;
 #endif    
-    INT8U      cpp;                                        /* Priority Inheritance Priority (PIP)      */
+    INT8U      cpp;                                        /* cpp                                      */
     INT8U      mprio;                                      /* Mutex owner priority                     */
     BOOLEAN    rdy;                                        /* Flag indicating task was ready           */
     OS_TCB    *ptcb;
@@ -334,9 +334,9 @@ void  OSMutexPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
         pevent->OSEventCnt |= OSTCBCur->OSTCBPrio;         /*      Save priority of owning task        */
         pevent->OSEventPtr  = (void *)OSTCBCur;            /*      Point to owning task's OS_TCB       */
 
-        cpp = (INT8U)(pevent->OSEventCnt >> 8);   //??????????????這甚麼意思            
-        if(cpp < OSTCBCur->OSTCBPrio){  //??????????????這甚麼意思
-            sprintf(&CtxSwMessage[CtxSwMessageTop++],"%5d lock R%d   (Prio=%d changes to=%d)\n",(int)OSTime,(int)cpp,(int)OSPrioCur,(int)cpp);
+        cpp = (INT8U)(pevent->OSEventCnt >> 8);   //往右移8bis            
+        if(cpp < OSTCBCur->OSTCBPrio){            //如果cpp(ceiling)有小於最低prio，那就使用cpp的prio執行
+            sprintf(&CtxSwMessage[CtxSwMessageTop++],"%5d lock   R%d   (Prio=%d changes to=%d)\n",(int)OSTime,(int)cpp,(int)OSPrioCur,(int)cpp);
             OSTCBCur->OSTCBPrio         = cpp;                     /* Change owner task prio to CPP            */
             OSTCBCur->OSTCBY            = OSTCBCur->OSTCBPrio >> 3;
             OSTCBCur->OSTCBBitY         = OSMapTbl[OSTCBCur->OSTCBY];
@@ -347,9 +347,9 @@ void  OSMutexPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
             OSTCBPrioTbl[cpp]           = (OS_TCB *)OSTCBCur;
             OSPrioCur = OSTCBCur->OSTCBPrio;
         }
-        else{
-            sprintf(&CtxSwMessage[CtxSwMessageTop++],"%5d lock R%d   (Prio=%d changes to=%d)\n",(int)OSTime,(int)cpp,(int)OSPrioCur,(int)OSPrioCur);
-        }  //???????????????????? 為什麼要這個
+        else{   //task prio已經比較高了，所以不用做修改
+            sprintf(&CtxSwMessage[CtxSwMessageTop++],"%5d lock   R%d   (Prio=%d changes to=%d)\n",(int)OSTime,(int)cpp,(int)OSPrioCur,(int)OSPrioCur);
+        }  
 
         OS_EXIT_CRITICAL();
         *err  = OS_NO_ERR;
@@ -443,7 +443,7 @@ INT8U  OSMutexPost (OS_EVENT *pevent)
         pevent->OSEventCnt |= prio;
         pevent->OSEventPtr  = OSTCBPrioTbl[prio];     /*      Link to mutex owner's OS_TCB             */
 
-        cpp= (INT8U)(pevent->OSEventCnt >> 8);                     /* No, Get cpp from mutex            */
+        cpp= (INT8U)(pevent->OSEventCnt >> 8);                           /* No, Get cpp from mutex            */
         OSTCBPrioTbl[prio]->OSTCBPrio         = cpp;                     /* Change owner task prio to PIP            */
         OSTCBPrioTbl[prio]->OSTCBY            = OSTCBPrioTbl[prio]->OSTCBPrio >> 3;
         OSTCBPrioTbl[prio]->OSTCBBitY         = OSMapTbl[OSTCBPrioTbl[prio]->OSTCBY];

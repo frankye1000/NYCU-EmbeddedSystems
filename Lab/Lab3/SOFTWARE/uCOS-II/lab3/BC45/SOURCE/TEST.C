@@ -75,8 +75,8 @@ void  main (void)
     PC_VectSet(uCOS, OSCtxSw);                             /* Install uC/OS-II's context switch vector */
 
 
-    R1 = OSMutexCreate(1,&err1);
-    R2 = OSMutexCreate(2,&err2);
+    R1 = OSMutexCreate(1,&err1);                      // resource 1
+    R2 = OSMutexCreate(2,&err2);                      // resource 2
     OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE - 1], 0);
     OSStart();                                             /* Start multitasking                       */
 }
@@ -150,7 +150,7 @@ void printCtxSwMessage(){
         static int i=0;
         for(;i<CtxSwMessageTop;i++){
             printf("%s", CtxSwMessage[i]);
-            //OSTimeDly(100);                         //set print interval******************************
+            OSTimeDly(100);                         //set print interval******************************
         }
 }
 /************************** case 1 *******************************************/

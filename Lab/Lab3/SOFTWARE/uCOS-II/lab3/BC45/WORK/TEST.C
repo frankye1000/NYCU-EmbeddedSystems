@@ -48,7 +48,7 @@ struct period TaskData[N_TASKS];                      /* Parameters to pass to e
 *********************************************************************************************************
 */
 
-        void printCtxSwMessage();
+        void  printCtxSwMessage();
         void  Task1(void *data);                       /* Function prototypes of tasks                  */
         void  Task2(void *data);                       /* Function prototypes of tasks                  */
         void  Task3(void *data);                       /* Function prototypes of tasks                  */
@@ -75,8 +75,8 @@ void  main (void)
     PC_VectSet(uCOS, OSCtxSw);                             /* Install uC/OS-II's context switch vector */
 
 
-    R1 = OSMutexCreate(1,&err1);
-    R2 = OSMutexCreate(2,&err2);
+    R1 = OSMutexCreate(1,&err1);                      // resource 1
+    R2 = OSMutexCreate(2,&err2);                      // resource 2
     OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE - 1], 0);
     OSStart();                                             /* Start multitasking                       */
 }
@@ -150,7 +150,7 @@ void printCtxSwMessage(){
         static int i=0;
         for(;i<CtxSwMessageTop;i++){
             printf("%s", CtxSwMessage[i]);
-            //OSTimeDly(200);                         //set print interval
+            OSTimeDly(100);                         //set print interval******************************
         }
 }
 /************************** case 1 *******************************************/
@@ -168,7 +168,6 @@ void Task1(void *pdata)
     int start=8;                         
     int startDelayTime;
     INT8U err;
-    //OSTCBCur->period=3;                      // set the period?????????????????????????????
     pdata = pdata;
     startDelayTime = start - OSTime;
     if(startDelayTime > 0) OSTimeDly(startDelayTime);
@@ -223,8 +222,6 @@ void Task3(void *pdata)
     pdata = pdata;
     startDelayTime = start - OSTime;
     if(startDelayTime > 0) OSTimeDly(startDelayTime);
-        
-    //OSTimeDly(0);                                  //???????????????????????
     
     //execution Time
     OSTCBCur->compTime=2;
