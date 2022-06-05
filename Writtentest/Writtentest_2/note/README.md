@@ -13,14 +13,14 @@
 - Polled execution
     - servers
     
-### Background execution
+## Background execution
 - 沒有週期性(periodic jobs)工作要做時，我才來做非週期性工作(aperiodic jobs)
 - 優點: 簡單執行
 - 缺點: response time 很差
 
 ![](https://i.imgur.com/QGFKtlo.png)
 
-### Interrupt-driven execution
+## Interrupt-driven execution
 - 非週期性工作為優先執行
 - 優點: response time 短
 - 缺點: 可能危害到週期性工作排程
@@ -30,7 +30,7 @@
 
 ![](https://i.imgur.com/pFxTMRI.png)
 
-### Polled execution
+## Polled execution
 - 預留一個server服務非週期性工作，讓其變成像是類週期性工作
 - 若當前週期queue是空的，就馬上**放棄所有budget**，下一周期再執行
 - 若非週期性工作在該周期執行完，就馬上放棄CPU
@@ -52,7 +52,7 @@
 - 以上這些server希望budget 留越晚越好
 - 以上這些server希望budget 越早補越好
 
-### Deferrable servers
+## Deferrable servers
 - 若當前週期queue是空的，**budget還是滿的**，budget可以一直留著
 - budget會固定週期性補到滿
 
@@ -64,7 +64,7 @@
 ![](https://i.imgur.com/vl3rPWt.png)
 
 
-### Deferrable servers 能不能排程
+## Deferrable servers 能不能排程
 - RM
     - 用liu-and-layland utilization bound測試能不能排程
 	
@@ -81,7 +81,7 @@
 
 
 
-### Simeple Sporadic servers
+## Simeple Sporadic servers
 - CPU執行High priority task時budget不動
 - CPU執行Low priority task時budget會依照速率1減少
 - CPU idle時budget會依照速率1減少
@@ -89,22 +89,22 @@
 
 ![](https://i.imgur.com/aMXmA8z.png)
 
-### Sporadic servers
+## Sporadic servers
 - server可以裂開(1.5,5) -> (1,5)、(0.5,5)，所以budget留著，當作還沒開始執行
 
 ![](https://i.imgur.com/cdnDtG6.png)
 
-### Sporadic servers 能不能排程
+## Sporadic servers 能不能排程
 - 加起來和U(4)做比較
 
-### Priority-Exchange servers
+## Priority-Exchange servers
 - for EDF
 - 製作複雜
 
 ![](https://i.imgur.com/xnWKIcG.png)
 
 
-### Constant utilization server 
+## Constant utilization server 
 - for EDF
 - 定義名詞:
     - arrival time: a 
@@ -118,7 +118,7 @@
 
 ![](https://i.imgur.com/ihVH5U3.png)
 
-### Total bandwidth server
+## Total bandwidth server
 - 補充時間提早，但dealine不變
 
 ![](https://i.imgur.com/pZw1l9L.png)
