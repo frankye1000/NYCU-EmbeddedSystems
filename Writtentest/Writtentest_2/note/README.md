@@ -17,6 +17,7 @@
 - 沒有週期性(periodic jobs)工作要做時，我才來做非週期性工作(aperiodic jobs)
 - 優點: 簡單執行
 - 缺點: response time 很差
+
 ![](https://i.imgur.com/QGFKtlo.png)
 
 ### Interrupt-driven execution
@@ -26,6 +27,7 @@
 
 ### Improvement
 - Slack stealing
+
 ![](https://i.imgur.com/pFxTMRI.png)
 
 ### Polled execution
@@ -34,6 +36,7 @@
 - 若非週期性工作在該周期執行完，就馬上放棄CPU
 - 優點: 可用週期性排程測試
 - 缺點: 當queue是空的，polling server就放棄budget進入下一個週期
+
 ![](https://i.imgur.com/oQsOoiE.png)
 
 ### Terminology
@@ -52,22 +55,28 @@
 ### Deferrable servers
 - 若當前週期queue是空的，**budget還是滿的**，budget可以一直留著
 - budget會固定週期性補到滿
+
 ![](https://i.imgur.com/WzJBbeI.png)
+
 - 優點: 對於非週期性工作respones time最好
 - 缺點: 可能會干擾下方週期性工作(double hit)
+
 ![](https://i.imgur.com/vl3rPWt.png)
 
 
 ### Deferrable servers 能不能排程
 - RM
     - 用liu-and-layland utilization bound測試能不能排程
+	
     ![](https://i.imgur.com/Zi6GuZZ.png)
+	
     ```
     U(2)<->0.6/3+0.8/4
     U(3)<->0.6/3+0.8/4+(0.5+0.8)/5
     U(4)<->0.6/3+0.8/4+0.5/5+(1.4+0.8)/7
     ```
 - EDF
+
 ![](https://i.imgur.com/36pz3YQ.png)
 
 
@@ -77,10 +86,12 @@
 - CPU執行Low priority task時budget會依照速率1減少
 - CPU idle時budget會依照速率1減少
 - 並在idle結束就補滿budget
+
 ![](https://i.imgur.com/aMXmA8z.png)
 
 ### Sporadic servers
 - server可以裂開(1.5,5) -> (1,5)、(0.5,5)，所以budget留著，當作還沒開始執行
+
 ![](https://i.imgur.com/cdnDtG6.png)
 
 ### Sporadic servers 能不能排程
@@ -89,6 +100,7 @@
 ### Priority-Exchange servers
 - for EDF
 - 製作複雜
+
 ![](https://i.imgur.com/xnWKIcG.png)
 
 
@@ -108,6 +120,7 @@
 
 ### Total bandwidth server
 - 補充時間提早，但dealine不變
+
 ![](https://i.imgur.com/pZw1l9L.png)
 
 
@@ -157,15 +170,18 @@
     - 不好分析
     - 異常現象特別多，例如:週期放寬居然會讓系統變不能排程
 - Anomaly 1: Relaxing Task Period
+
 ![](https://i.imgur.com/YhSqCSw.png)
 
 - Anomaly 2: Dhall's Effect
+
 ![](https://i.imgur.com/2GhpFyO.png)
 
 - Schedulability Test
     - 滿足以下公式就可以使用Global EDF排程，
     - M: M個CPU
     - Ck/Tk: 是Tasks中最大使用率
+	
 ![](https://i.imgur.com/44tB7TT.png)
 
 - Weakness of Global Scheduling
@@ -180,6 +196,7 @@
     - worst case下使用率可能會很差
 - Bin Packing Problem 是NP-Hard問題，可以被傳換成Partitioned Scheduling Problem
 - Example
+
 ![](https://i.imgur.com/nHPYmBe.png)
 - Partitioning Algorithms
     - First-Fit
@@ -193,6 +210,7 @@
     - m: m個CPU
     - α: 是Tasks中最大使用率
     - β: 是α的倒數取floor function
+	
 ![](https://i.imgur.com/wd7PTkJ.png)
 
 
@@ -222,4 +240,5 @@
 
 - 只有在保存下來的time window裡才能執行split task
 - 剩餘時間，各別使用partitioned scheduling EDF排程
+
 ![](https://i.imgur.com/z0jhnlq.png)
